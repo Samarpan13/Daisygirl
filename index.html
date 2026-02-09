@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>For Shreya 💖</title>
+  <title>For Shreya 💘</title>
 
   <style>
     :root{
@@ -14,7 +14,6 @@
       --pink:#ff2f7d;
       --pink2:#ff7fb4;
       --shadow: 0 22px 70px rgba(255,47,125,.22);
-      --softShadow: 0 12px 26px rgba(0,0,0,.10);
       --border: 1px solid rgba(0,0,0,.06);
     }
 
@@ -33,7 +32,7 @@
         linear-gradient(135deg,var(--bg1),var(--bg2));
     }
 
-    /* floating hearts (subtle) */
+    /* background hearts */
     .heart{
       position:absolute;
       width:16px;height:16px;
@@ -58,10 +57,9 @@
       to{ transform: translateY(-120vh) rotate(45deg); }
     }
 
-    /* floating nickname words */
+    /* floating nickname chips */
     .floatWord{
       position:absolute;
-      left:0; top:0;
       font-weight:900;
       letter-spacing:-.02em;
       padding:8px 12px;
@@ -78,6 +76,7 @@
       opacity:.95;
       animation: drift 16s linear infinite;
       font-size: 13px;
+      z-index:1;
     }
     .floatWord b{ color: rgba(255,47,125,.95); }
     @keyframes drift{
@@ -180,12 +179,11 @@
       background: rgba(255,47,125,.07);
       border:1px solid rgba(255,47,125,.14);
     }
-    .note .sign{
+    .sign{
       margin-top:10px;
       font-weight:900;
-      color: rgba(31,31,31,.90);
     }
-    .note .sign span{ color: var(--pink); }
+    .sign span{ color: var(--pink); }
 
     .media{
       display:flex;
@@ -199,7 +197,7 @@
       width: min(360px, 88vw);
       border-radius:18px;
       border: var(--border);
-      box-shadow: var(--softShadow);
+      box-shadow: 0 12px 26px rgba(0,0,0,.10);
       object-fit:cover;
     }
     .caption{
@@ -209,7 +207,6 @@
       margin-top:8px;
     }
 
-    /* NAV: sticky so poem doesn't feel "stuck" */
     .nav{
       display:flex;
       flex-wrap:wrap;
@@ -228,7 +225,6 @@
       box-shadow: 0 10px 22px rgba(0,0,0,.06);
       z-index: 5;
     }
-
     .navTop{
       display:flex;
       gap:10px;
@@ -259,22 +255,6 @@
       color:#333;
     }
 
-    .footer{
-      text-align:center;
-      font-size:12px;
-      opacity:.7;
-      margin-top:12px;
-    }
-
-    .bigheart{
-      font-size:54px;
-      display:inline-block;
-      animation: thump 1.2s ease-in-out infinite;
-      filter: drop-shadow(0 10px 18px rgba(255,47,125,.18));
-      margin:6px 0 2px;
-    }
-    @keyframes thump{ 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
-
     .yesArea{
       margin-top:16px;
       display:flex;
@@ -294,6 +274,7 @@
       transform: translate(-50%,-50%);
       animation: pop .55s ease-out forwards;
       filter: blur(.2px);
+      z-index:999;
     }
     @keyframes pop{
       0%{ opacity:0; transform: translate(-50%,-50%) scale(.6); }
@@ -327,6 +308,7 @@
       width:10px;height:10px;border-radius:50%;
       background: rgba(255,47,125,.9);
       box-shadow: 0 0 0 6px rgba(255,47,125,.12);
+      opacity:.45;
     }
     .musicLabel{
       font-size:12.5px;
@@ -340,16 +322,35 @@
       font-weight:950;
     }
 
-    audio{
-      width:100%;
-      max-width:360px;
+    audio{ width:100%; max-width:360px; }
+
+    .tiny{
+      font-size:12.5px;
+      opacity:.7;
+      margin-top:10px;
     }
+    .assetRow{
+      margin-top:10px;
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .assetTag{
+      font-size:12px;
+      font-weight:900;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,.08);
+      background: rgba(255,255,255,.72);
+      opacity:.85;
+    }
+    .ok{ border-color: rgba(16,185,129,.35); }
+    .bad{ border-color: rgba(239,68,68,.35); }
   </style>
 </head>
 
 <body>
   <script>
-    // soft background hearts
     const heartCount = 18;
     for(let i=0;i<heartCount;i++){
       const h=document.createElement('div');
@@ -365,8 +366,8 @@
     }
   </script>
 
-  <!-- Background music (won't autoplay on phones; user taps Play once) -->
-  <audio id="bgm" src="music.mp3" loop preload="none"></audio>
+  <!-- Background music (user taps Play once; phones block autoplay) -->
+  <audio id="bgm" loop preload="none"></audio>
 
   <div class="musicPill" aria-label="music control">
     <div class="musicDot" id="musicDot"></div>
@@ -382,8 +383,6 @@
       </div>
 
       <div id="scenes"></div>
-
-      <div class="footer">Made by Samarpan — quietly, carefully, and with love 💗</div>
     </div>
   </div>
 
@@ -392,102 +391,86 @@
     const NAME = "Shreya";
     const YOUR_NAME = "Samarpan";
 
-    // Put these files in the same GitHub repo folder as index.html:
-    const COUPLE_PHOTO = "us.jpg";     // e.g. us.jpg or us.png
-    const VOICE_NOTE   = "shreya.mp3"; // mp3 recommended
-    const BGM_FILE     = "music.mp3";  // background music file
+    // Put these files in the SAME folder as index.html (repo root)
+    const COUPLE_PHOTO = "us.jpg";        // or "us.png"
+    const VOICE_MP3    = "shreya.mp3";    // if you have mp3
+    const VOICE_M4A    = "shreya.m4a";    // if you have m4a instead
+    const MUSIC_MP3    = "music.mp3";     // optional
     // =====================
 
     document.getElementById("herName").textContent = NAME;
 
-    const scenesEl = document.getElementById("scenes");
-    const progressEl = document.getElementById("progress");
+    // cache-buster to defeat Safari/GitHub caching while you iterate
+    const CB = `?v=${Date.now()}`;
 
     // --- Music controls ---
     const bgm = document.getElementById("bgm");
-    bgm.src = BGM_FILE;
+    bgm.src = MUSIC_MP3 + CB;
+
     const musicToggle = document.getElementById("musicToggle");
-    const musicLabel = document.getElementById("musicLabel");
-    const musicDot = document.getElementById("musicDot");
+    const musicLabel  = document.getElementById("musicLabel");
+    const musicDot    = document.getElementById("musicDot");
 
     function setMusicUI(isOn){
       musicLabel.textContent = "Music: " + (isOn ? "On" : "Off");
       musicToggle.textContent = isOn ? "Pause" : "Play";
       musicDot.style.opacity = isOn ? "1" : ".45";
     }
-
-    // Remember if user turned music on (so it stays on between page changes)
-    const savedMusic = localStorage.getItem("bgm_on") === "1";
     setMusicUI(false);
 
-    async function tryPlay(){
+    async function tryPlayMusic(){
       try{
         await bgm.play();
         localStorage.setItem("bgm_on","1");
         setMusicUI(true);
       }catch(e){
-        // mobile blocks autoplay; user must tap play (this is okay)
         setMusicUI(false);
       }
     }
-
     function pauseMusic(){
       bgm.pause();
       localStorage.setItem("bgm_on","0");
       setMusicUI(false);
     }
-
     musicToggle.addEventListener("click", async ()=>{
-      if(bgm.paused) await tryPlay();
+      if(bgm.paused) await tryPlayMusic();
       else pauseMusic();
     });
 
-    // attempt to resume if previously on (will only succeed after a user gesture on some phones)
-    if(savedMusic){
-      // don't force; keep UI accurate after first gesture
-      setMusicUI(false);
-    }
-
-    // --- Background floating nickname words ---
+    // --- Floating nickname chips ---
     const nicknames = [
-      {t:"Chaakey", e:"💘"},
+      {t:"Chalky", e:"💘"},
       {t:"Sanu", e:"🌙"},
       {t:"Baby", e:"💋"},
       {t:"Mrs Thapa", e:"🌹"},
-      {t:"Chaakey", e:"🫂"},
+      {t:"Chalky", e:"🫂"},
       {t:"Sanu", e:"💞"},
       {t:"Baby", e:"🍫"},
-      {t:"Mrs Thapa", e:"🧸"}
+      {t:"Mrs Thapa", e:"🧸"},
+      {t:"Chalky", e:"😘"},
+      {t:"Sanu", e:"❤️"}
     ];
 
     function spawnWord(){
       const w = document.createElement("div");
       w.className = "floatWord";
       const pick = nicknames[Math.floor(Math.random()*nicknames.length)];
-      // Position somewhere across width; start lower area
       w.style.left = (6 + Math.random()*88) + "vw";
       w.style.top  = (70 + Math.random()*25) + "vh";
-
-      // Size + speed variation
       const size = 12 + Math.random()*6;
       w.style.fontSize = size + "px";
       const dur = 12 + Math.random()*10;
       w.style.animationDuration = dur + "s";
       w.style.animationDelay = (-Math.random()*dur) + "s";
       w.style.opacity = (0.75 + Math.random()*0.25).toFixed(2);
-
       w.innerHTML = `<b>${pick.t}</b> ${pick.e}`;
       document.body.appendChild(w);
-
-      // remove eventually
       setTimeout(()=>w.remove(), (dur+2)*1000);
     }
-
-    // spawn a few initially + then occasionally
     for(let i=0;i<10;i++) spawnWord();
-    setInterval(()=>spawnWord(), 1200);
+    setInterval(spawnWord, 1200);
 
-    // --- sparkle on click ---
+    // --- sparkles ---
     function sparkle(x,y){
       const s=document.createElement('div');
       s.className='sparkle';
@@ -497,46 +480,53 @@
       setTimeout(()=>s.remove(), 600);
     }
 
+    // --- Asset check (helps debug media not loading) ---
+    async function checkAsset(url){
+      try{
+        const r = await fetch(url, { method: "HEAD", cache: "no-store" });
+        return r.ok;
+      }catch(e){
+        return false;
+      }
+    }
+
     // --- Scene template ---
-    function tplScene({title, dayLabel, pills=[], bodyHTML="", showPhoto=false, showVoice=false, final=false, isPoem=false}) {
+    function tplScene({title, dayLabel="", pills=[], bodyHTML="", showPhoto=false, showVoice=false, final=false, isPoem=false}) {
       const wrap = document.createElement("div");
       wrap.className = "scene";
 
-      const pillsHTML = pills.length
-        ? `<div class="pillrow">${pills.map(t=>`<div class="pill">${t}</div>`).join("")}</div>`
-        : "";
+      const dayHTML = dayLabel ? `<div class="pillrow"><div class="pill">${dayLabel}</div></div>` : "";
+      const pillsHTML = pills.length ? `<div class="pillrow">${pills.map(t=>`<div class="pill">${t}</div>`).join("")}</div>` : "";
 
-      const dayHTML = dayLabel
-        ? `<div class="pillrow"><div class="pill">${dayLabel}</div></div>`
-        : "";
-
-      const photoHTML = (showPhoto && COUPLE_PHOTO)
-        ? `
-          <div class="media">
-            <img src="${COUPLE_PHOTO}" alt="us" loading="lazy">
-          </div>
-          <div class="caption">Us. A calm kind of happiness.</div>
-        ` : "";
-
-      const voiceHTML = (showVoice && VOICE_NOTE)
-        ? `
-          <div class="bubble" style="margin-top:14px; text-align:center;">
-            <p style="margin:0; font-weight:950;">Press play when you’re alone.</p>
-            <p style="margin:6px 0 12px; opacity:.75;">(My voice. No performance. Just me.)</p>
-            <audio controls preload="none">
-              <source src="${VOICE_NOTE}" type="audio/mpeg">
-              Your browser does not support audio playback.
-            </audio>
-          </div>
-        ` : "";
-
-      // poem page gets a top nav so it never feels stuck
       const poemTopNav = isPoem ? `
         <div class="navTop">
           <button class="btn2" id="prevBtnTop">← Back</button>
           <button class="btn" id="nextBtnTop">Next →</button>
         </div>
       ` : "";
+
+      const photoHTML = (showPhoto)
+        ? `
+          <div class="media">
+            <img id="coupleImg" src="${COUPLE_PHOTO + CB}" alt="us" loading="lazy">
+          </div>
+          <div class="caption">You. Me. Same team.</div>
+        ` : "";
+
+      // Voice: include both mp3 + m4a sources, whichever exists will work
+      const voiceHTML = (showVoice)
+        ? `
+          <div class="bubble" style="margin-top:14px; text-align:center;">
+            <p style="margin:0; font-weight:950;">Press play.</p>
+            <p style="margin:6px 0 12px; opacity:.75;">(Yes, it’s my voice.)</p>
+            <audio controls preload="none">
+              <source src="${VOICE_MP3 + CB}" type="audio/mpeg">
+              <source src="${VOICE_M4A + CB}" type="audio/mp4">
+              Your browser does not support audio playback.
+            </audio>
+            <div class="tiny" id="voiceHint"></div>
+          </div>
+        ` : "";
 
       wrap.innerHTML = `
         <h1>${title}</h1>
@@ -548,12 +538,12 @@
         ${photoHTML}
         ${final ? `
           <div class="yesArea">
-            <button class="btn" id="yesBtn">Yes 💞</button>
+            <button class="btn" id="yesBtn">YES 💞</button>
             <span class="no-wrap">
               <button class="btn2" id="noBtn">No 😶</button>
             </span>
           </div>
-          <div class="caption" id="noHint">You can answer honestly… but the “No” button has commitment issues.</div>
+          <div class="caption" id="noHint">You can answer honestly… but that button is nervous.</div>
         ` : `
           <div class="nav">
             <button class="btn2" id="prevBtn">← Back</button>
@@ -565,154 +555,94 @@
       return wrap;
     }
 
-    // --- High-quality writing per day (funny but not cheap) ---
+    // --- Content (closer to your earlier vibe: cute, romantic, funny — not “corporate”) ---
     const VAL_WEEK = [
       {
         day: "Welcome",
-        title: `Hi ${NAME}.`,
-        dayLabel: "A small collection of big feelings 💗",
-        pills: ["Chaakey • Sanu • Baby • Mrs Thapa", "Handmade, not copied"],
+        title: `Hi ${NAME}… 🥺👉👈`,
+        dayLabel: "Just a small thing for you 💗",
+        pills: ["Chalky", "Sanu", "Baby", "Mrs Thapa"],
         bodyHTML: `
-          <p>
-            This isn’t meant to impress the internet.
-            It’s meant to reach <b>you</b>.
-          </p>
-          <p>
-            I know you already know I love you.
-            This is me doing it again — but more carefully, more intentionally.
-          </p>
-
+          <p>I’m not going to ask you what you like. I already know. (Five years, remember? 😌)</p>
+          <p>This is just me being a little extra… because you deserve it.</p>
           <div class="note">
             <p style="margin:0;">
-              I’m not going to ask you “what you like.”
-              I’ve had five years of research, observations, and professional-level missing-you.
+              One request: read it slowly.<br>
+              And don’t roll your eyes too hard at the cute parts. I worked hard to be shameless.
             </p>
             <p class="sign">— Your impatient <span>${YOUR_NAME}</span> 💘</p>
           </div>
-
-          <p style="opacity:.82; margin-top:12px;">
-            Start the music if you want. Then go page by page.
-          </p>
+          <p class="tiny">Tip: hit Play for music if you want.</p>
         `
       },
 
       {
         day: "Rose Day",
-        title: "Rose Day",
-        dayLabel: "🌹",
-        pills: ["Soft", "Simple", "For you"],
+        title: "Rose Day 🌹",
+        dayLabel: "Rose Day",
         bodyHTML: `
-          <p>
-            If I were there, I’d give you a rose in real life and pretend I’m smooth.
-            (I am not. But I would try bravely.)
-          </p>
-          <p>
-            So here’s the honest version:
-            you make my life feel less noisy.
-            You’re the calm I didn’t know I needed.
-          </p>
-          <p>
-            And yes — this is me giving you a rose from far away, with full sincerity and zero cringe.
-          </p>
+          <p>If I was there, I’d give you a rose and pretend I’m smooth.</p>
+          <p>Reality: I’d probably get shy, smile like an idiot, and still give it to you anyway.</p>
+          <p>So here’s my rose from far away: 🌹</p>
+          <p>Also yes, you’re still my favorite person. Annoying, but true.</p>
         `
       },
 
       {
         day: "Propose Day",
-        title: "Propose Day",
-        dayLabel: "💍",
-        pills: ["No speech", "No drama", "Just truth"],
+        title: "Propose Day 💍",
+        dayLabel: "Propose Day",
         bodyHTML: `
-          <p>
-            I’m not proposing with a crowd, a camera, or a dramatic soundtrack.
-          </p>
-          <p>
-            I’m proposing with the most serious thing I have:
-            <b>consistency</b>.
-          </p>
-          <p>
-            I choose you in the small moments —
-            the random check-ins, the long calls, the patience during distance,
-            the way I still want you at the end of the day.
-          </p>
-          <p>
-            So yes, this is a proposal:
-            keep being my person.
-          </p>
+          <p>This is not a public proposal. No audience. No drama. Just you and me.</p>
+          <p>I propose that we keep doing this — choosing each other even when distance acts like a villain.</p>
+          <p>And I propose you let me miss you in peace… because I’m going to do it anyway.</p>
         `
       },
 
       {
         day: "Chocolate Day",
-        title: "Chocolate Day",
-        dayLabel: "🍫",
-        pills: ["Sweet", "Warm", "A little dangerous"],
+        title: "Chocolate Day 🍫",
+        dayLabel: "Chocolate Day",
         bodyHTML: `
-          <p>
-            Chocolate day is basically the universe admitting that sweetness is a need, not a luxury.
-          </p>
-          <p>
-            If I were there, you’d get chocolate and I’d still try to steal a bite —
-            then deny it with full confidence.
-          </p>
-          <p>
-            Today I’m sending you the long-distance version:
-            a reminder that you deserve softness, comfort, and being cared for.
-          </p>
+          <p>If I could deliver chocolate through the screen, I would.</p>
+          <p>Since science is failing me, I’m sending you this instead:</p>
+          <p><b>permission to be spoiled today.</b></p>
+          <p>If you eat chocolate, I’m happy. If you don’t, I’m still happy… but slightly suspicious.</p>
         `
       },
 
       {
         day: "Teddy Day",
-        title: "Teddy Day",
-        dayLabel: "🧸",
-        pills: ["Cuddly", "Safe", "Not negotiable"],
+        title: "Teddy Day 🧸",
+        dayLabel: "Teddy Day",
         bodyHTML: `
-          <p>
-            Teddy Day is for soft things.
-            So is my love for you.
-          </p>
-          <p>
-            If I could, I’d replace your pillow for one night —
-            just to win a very petty competition.
-          </p>
-          <p>
-            Consider this a reminder that you are held —
-            even when we’re not in the same room.
-          </p>
+          <p>I would 100% replace your teddy today if teleportation existed.</p>
+          <p>Until then: imagine a long hug that doesn’t end too fast.</p>
+          <p>Also I’m jealous of your pillow. It gets you every night. I’m not proud of this jealousy. But it exists.</p>
         `
       },
 
       {
         day: "Promise Day",
-        title: "Promise Day",
-        dayLabel: "🤝",
-        pills: ["Effort", "Respect", "Home in a person"],
+        title: "Promise Day 🤝",
+        dayLabel: "Promise Day",
         bodyHTML: `
+          <p>I promise to keep loving you in the small ways — the ones that actually matter.</p>
+          <p>I promise to keep choosing you, even on boring days, even on tired days.</p>
+          <p>And I promise I’ll never forget our favorites:</p>
           <p>
-            My promises aren’t dramatic.
-            They’re practical — the kind that actually shows up.
-          </p>
-          <p>
-            I promise to keep choosing you gently,
-            to protect your peace,
-            and to love you in ways that feel safe, not loud.
-          </p>
-          <p>
-            And I promise I won’t forget the things that made us <i>us</i>:
-            our first date,
-            that full moon at Patan Mandir,
-            and momo in Patan ko Galli — laughing like nothing else mattered.
+            • our first date<br>
+            • that full moon at Patan Mandir<br>
+            • momo in Patan ko Galli
           </p>
         `
       },
 
-      // Quiet poem interlude — she recognizes it herself
       {
         day: "Poem",
         title: "🌙",
         dayLabel: "",
-        pills: ["(no explanation)", "just a page from then"],
+        pills: ["(a quiet page)"],
         isPoem: true,
         bodyHTML: `
           <p style="opacity:.85; font-style:italic; margin-top:0;">
@@ -788,92 +718,63 @@
 
       {
         day: "Hug Day",
-        title: "Hug Day",
-        dayLabel: "🫂",
-        pills: ["Tight", "Quiet", "Exactly what I want"],
+        title: "Hug Day 🫂",
+        dayLabel: "Hug Day",
         bodyHTML: `
-          <p>
-            Hug Day feels unfair when we’re apart.
-            So I’m doing this the only way I can:
-            carefully, intentionally, and with full affection.
-          </p>
-
-          <div class="note">
-            <p style="margin:0;">
-              Close your eyes for two seconds.
-              Imagine my arms around you — not rushing, not letting go too fast.
-              Just… staying.
-            </p>
-            <p class="sign">— ${YOUR_NAME} 🫂</p>
-          </div>
-
-          <p style="margin-top:12px;">
-            Also yes: the distance is annoying.
-            But it’s never been stronger than what we built.
-          </p>
+          <p>This is the part where distance gets annoying.</p>
+          <p>So here’s my long-distance hug protocol:</p>
+          <p><b>Step 1:</b> imagine I’m hugging you.<br>
+             <b>Step 2:</b> imagine I refuse to let go.<br>
+             <b>Step 3:</b> accept your fate (being loved).</p>
+          <p>I miss you. A lot. In a way that makes me dramatic in private.</p>
         `
       },
 
       {
         day: "Kiss Day",
-        title: "Kiss Day",
-        dayLabel: "💋",
-        pills: ["Romantic", "Respectful", "Slightly chaotic"],
+        title: "Kiss Day 💋",
+        dayLabel: "Kiss Day",
         bodyHTML: `
-          <p>
-            I owe you kisses in bulk.
-            The kind that says “I’m here,” even when I’m not physically there.
-          </p>
-
-          <div class="note">
-            <p style="margin:0;">
-              And yes — we must acknowledge the national event:
-              <b>the day I didn’t eat ice-cream through your mouth.</b>
-              I still don’t know whether I was being innocent or just trying to survive.
-            </p>
-            <p class="sign">— still scared, <span>${YOUR_NAME}</span> 🍦</p>
-          </div>
-
-          <p style="margin-top:12px;">
-            If you’re mad about it again, that’s fine.
-            I’ll apologize properly — in person — with interest.
-          </p>
+          <p>I owe you kisses. Too many.</p>
+          <p>But first we must mention the historic moment:</p>
+          <p><b>when I didn’t eat ice-cream through your mouth.</b></p>
+          <p>I still don’t know what was going on in my brain. Fear? Respect? Survival?</p>
+          <p>You were mad. I was confused. We were iconic. 😭</p>
         `
       },
 
       {
         day: "Valentine",
-        title: `${NAME}…`,
-        dayLabel: "💘",
-        pills: ["Chaakey", "Sanu", "Baby", "Mrs Thapa"],
+        title: `${NAME}… the big question 💘`,
+        dayLabel: "Valentine",
+        pills: ["Chalky", "Sanu", "Baby", "Mrs Thapa"],
         showVoice: true,
         showPhoto: true,
         final: true,
         bodyHTML: `
-          <p>
-            I don’t love you because of a list.
-            I love you because life feels more like itself when you’re in it.
-          </p>
-          <p>
-            You’re the person I want to tell things to.
-            The person I miss in small moments.
-            The person I choose — even on ordinary days.
-          </p>
+          <p>I don’t have “reasons.” I just love you.</p>
+          <p>Like… the simple kind that stays. The kind that shows up. The kind that feels like home.</p>
           <div class="note">
-            <p style="margin:0;">
-              So here’s the whole point of this page:
-              <b>Will you be my Valentine?</b>
-            </p>
-            <p class="sign">— ${YOUR_NAME} 💗</p>
+            <p style="margin:0; font-weight:950;">Will you be my Valentine? 🌹</p>
+            <p class="sign">— <span>${YOUR_NAME}</span></p>
           </div>
+
+          <div class="assetRow" id="assetRow">
+            <div class="assetTag" id="photoTag">Photo: checking…</div>
+            <div class="assetTag" id="voiceTag">Voice: checking…</div>
+            <div class="assetTag" id="musicTag">Music: checking…</div>
+          </div>
+          <div class="tiny" id="assetHint"></div>
         `
       }
     ];
 
-    // build scenes
+    const scenesEl = document.getElementById("scenes");
+    const progressEl = document.getElementById("progress");
+
     const sceneNodes = VAL_WEEK.map((d) => tplScene({
       title: d.title,
-      dayLabel: d.dayLabel,
+      dayLabel: d.dayLabel || "",
       pills: d.pills || [],
       bodyHTML: d.bodyHTML || "",
       showPhoto: !!d.showPhoto,
@@ -896,14 +797,12 @@
       if(prev) prev.onclick = (e)=>{ sparkle(e.clientX, e.clientY); show(idx-1); };
       if(next) next.onclick = (e)=>{ sparkle(e.clientX, e.clientY); show(idx+1); };
 
-      // poem top nav
       const prevTop = active.querySelector("#prevBtnTop");
       const nextTop = active.querySelector("#nextBtnTop");
       if(prevTop) prevTop.onclick = (e)=>{ sparkle(e.clientX, e.clientY); show(idx-1); };
       if(nextTop) nextTop.onclick = (e)=>{ sparkle(e.clientX, e.clientY); show(idx+1); };
     }
 
-    // Final scene: playful "No" button that dodges but doesn't feel cheap
     function bindFinal(active){
       const yes = active.querySelector("#yesBtn");
       const no  = active.querySelector("#noBtn");
@@ -913,15 +812,15 @@
       let noDodges = 0;
       const noPhrases = [
         "Are you sure? 🥺",
-        "Pause. Think again. 😭",
-        "That option seems… inconsistent with reality.",
+        "Wait wait wait 😭",
+        "That choice seems… incorrect.",
         "Your finger slipped. Try again 😌",
-        "What if… yes? (just exploring) 😳",
-        "I’m going to be dramatically sad. Quietly.",
-        "That’s illegal in my heart’s constitution 🚔💘",
-        "The universe rejects this input 🌌",
+        "Okay but what if… yes? 😳",
+        "I’m gonna be sad (tiny) 😔",
+        "That’s illegal actually 🚔💘",
+        "The universe rejects this 🌌",
         "I asked nicely though 🥹",
-        "Last chance… please? 🍓"
+        "Last chance… pretty please? 🍓"
       ];
 
       function dodge(){
@@ -951,16 +850,11 @@
       if(yes){
         yes.onclick = async (e)=>{
           sparkle(e.clientX, e.clientY);
-
-          // If she taps yes and music was previously on, try to start it now (this click counts as a gesture)
-          if(localStorage.getItem("bgm_on") === "1" && bgm.paused) {
-            await tryPlay();
-          }
-
+          // If she already hit play earlier, try to keep it going after a click
+          if(localStorage.getItem("bgm_on") === "1" && bgm.paused) await tryPlayMusic();
           alert(`YAY 💖\n\nOfficially confirmed:\n${NAME} is my Valentine.\n\n— ${YOUR_NAME}`);
         };
       }
-
       if(no){
         no.addEventListener("mouseenter", dodge);
         no.addEventListener("touchstart", (e)=>{ e.preventDefault(); dodge(); }, {passive:false});
@@ -971,22 +865,52 @@
       }
     }
 
+    async function runAssetChecks(active){
+      const row = active.querySelector("#assetRow");
+      if(!row) return;
+
+      const photoTag = active.querySelector("#photoTag");
+      const voiceTag = active.querySelector("#voiceTag");
+      const musicTag = active.querySelector("#musicTag");
+      const hint = active.querySelector("#assetHint");
+
+      const photoOK = await checkAsset(COUPLE_PHOTO + CB);
+      const voiceMP3OK = await checkAsset(VOICE_MP3 + CB);
+      const voiceM4AOK = await checkAsset(VOICE_M4A + CB);
+      const musicOK = await checkAsset(MUSIC_MP3 + CB);
+
+      photoTag.textContent = `Photo: ${photoOK ? "OK" : "NOT FOUND"}`;
+      voiceTag.textContent = `Voice: ${(voiceMP3OK || voiceM4AOK) ? "OK" : "NOT FOUND"}`;
+      musicTag.textContent = `Music: ${musicOK ? "OK" : "NOT FOUND"}`;
+
+      photoTag.classList.toggle("ok", photoOK);
+      photoTag.classList.toggle("bad", !photoOK);
+
+      voiceTag.classList.toggle("ok", (voiceMP3OK || voiceM4AOK));
+      voiceTag.classList.toggle("bad", !(voiceMP3OK || voiceM4AOK));
+
+      musicTag.classList.toggle("ok", musicOK);
+      musicTag.classList.toggle("bad", !musicOK);
+
+      if(!photoOK || !(voiceMP3OK || voiceM4AOK)){
+        hint.textContent =
+          "If something says NOT FOUND: check the filename (lowercase), and make sure the file is in the repo root next to index.html. GitHub Pages is case-sensitive.";
+      } else {
+        hint.textContent = "";
+      }
+    }
+
     function show(i){
       idx = Math.max(0, Math.min(i, sceneNodes.length-1));
       document.querySelectorAll(".scene").forEach(s => s.classList.remove("active"));
       const active = sceneNodes[idx];
       active.classList.add("active");
       updateProgress();
-
       bindNav(active);
       bindFinal(active);
 
-      // After user has interacted once, try to honor saved music preference
-      // (won't autoplay on some phones until they press Play; that’s normal)
-      if(savedMusic && bgm.paused){
-        // keep UI "off" until it actually plays
-        setMusicUI(!bgm.paused);
-      }
+      // On the final page, run checks so we can see why media isn't loading
+      runAssetChecks(active).catch(()=>{});
 
       window.scrollTo({top:0, behavior:"smooth"});
     }
