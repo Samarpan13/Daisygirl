@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For Shreya 💖</title>
+
+  <style>
+    :root{
+      --bg1:#fff1f6;
+      --bg2:#ffe5ef;
+      --card:#ffffffde;
+      --text:#1f1f1f;
+      --pink:#ff3d86;
+      --pink2:#ff7db2;
+      --ink:#2b2b2b;
+      --shadow: 0 20px 60px rgba(255,77,141,.25);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      background:
+        radial-gradient(1200px 800px at 10% 15%, #ffd5e6 0%, transparent 55%),
+        radial-gradient(1000px 700px at 90% 35%, #ffe8f1 0%, transparent 60%),
+        linear-gradient(135deg,var(--bg1),var(--bg2));
+    }
+
+    /* floating hearts */
+    .heart{
+      position:absolute;
+      width:16px;height:16px;
+      transform: rotate(45deg);
+      background: rgba(255,61,134,.26);
+      border-radius:4px;
+      animation: floatUp 10s linear infinite;
+      opacity:.75;
+      pointer-events:none;
+    }
+    .heart:before,.heart:after{
+      content:"";
+      position:absolute;
+      width:16px;height:16px;
+      background: inherit;
+      border-radius:50%;
+    }
+    .heart:before{ left:-8px; top:0;}
+    .heart:after{ top:-8px; left:0;}
+    @keyframes floatUp{
+      from{ transform: translateY(30vh) rotate(45deg); }
+      to{ transform: translateY(-120vh) rotate(45deg); }
+    }
+
+    .wrap{
+      width:min(960px, 94vw);
+      padding:22px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid rgba(255,255,255,.6);
+      border-radius:28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      padding:22px 18px;
+      position:relative;
+    }
+
+    .top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:10px;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(255,61,134,.12);
+      border:1px solid rgba(255,61,134,.22);
+      font-weight:800;
+      font-size:13px;
+    }
+    .progress{
+      font-size:13px;
+      opacity:.75;
+      white-space:nowrap;
+    }
+
+    h1{
+      margin:8px 0 6px;
+      font-size: clamp(22px, 4vw, 34px);
+      letter-spacing:-.02em;
+      line-height:1.12;
+    }
+    p{
+      margin:8px 0;
+      font-size:15.5px;
+      line-height:1.65;
+      opacity:.94;
+    }
+
+    .scene{ display:none; animation: in .45s ease; }
+    .scene.active{ display:block; }
+    @keyframes in{ from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
+
+    .pillrow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:10px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(255,61,134,.10);
+      border:1px solid rgba(255,61,134,.18);
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .bubble{
+      background: rgba(255,255,255,.75);
+      border:1px solid rgba(0,0,0,.06);
+      border-radius:18px;
+      padding:14px;
+      margin-top:14px;
+    }
+
+    .note{
+      margin-top:14px;
+      padding:12px 14px;
+      border-radius:16px;
+      background: rgba(255,61,134,.08);
+      border:1px solid rgba(255,61,134,.18);
+    }
+
+    .media{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:center;
+      margin-top:12px;
+    }
+    .media img{
+      width: min(320px, 86vw);
+      border-radius:18px;
+      border: 1px solid rgba(0,0,0,.08);
+      box-shadow: 0 12px 26px rgba(0,0,0,.10);
+      object-fit:cover;
+    }
+    .caption{
+      text-align:center;
+      font-size:12.5px;
+      opacity:.75;
+      margin-top:8px;
+    }
+
+    .nav{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:16px;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    button{
+      border:0;
+      border-radius:16px;
+      padding:12px 14px;
+      font-weight:900;
+      cursor:pointer;
+      transition: transform .12s ease, filter .12s ease;
+      user-select:none;
+    }
+    button:hover{ transform: translateY(-1px); filter: brightness(1.02); }
+
+    .btn{
+      background: linear-gradient(135deg, var(--pink), var(--pink2));
+      color:white;
+      box-shadow: 0 12px 24px rgba(255,61,134,.28);
+    }
+    .btn2{
+      background: rgba(0,0,0,.06);
+      color:#333;
+    }
+
+    .footer{
+      text-align:center;
+      font-size:12px;
+      opacity:.7;
+      margin-top:12px;
+    }
+
+    /* consistent cute “sticker” look */
+    .stickerRow{
+      margin-top:10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .sticker{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:18px;
+      background: rgba(255,255,255,.8);
+      border:1px solid rgba(0,0,0,.06);
+      box-shadow: 0 10px 22px rgba(0,0,0,.06);
+    }
+    .sticker svg{ width:40px; height:40px; }
+    .sticker .t{
+      font-weight:900;
+      letter-spacing:-.01em;
+    }
+    .wiggle{ animation: wiggle 1.6s ease-in-out infinite; transform-origin: 50% 60%; }
+    @keyframes wiggle{
+      0%,100%{ transform: rotate(-4deg) }
+      50%{ transform: rotate(4deg) }
+    }
+
+    .bigheart{
+      font-size:54px;
+      display:inline-block;
+      animation: thump 1.2s ease-in-out infinite;
+      filter: drop-shadow(0 10px 18px rgba(255,61,134,.20));
+      margin:6px 0 2px;
+    }
+    @keyframes thump{ 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
+
+    .yesArea{
+      margin-top:16px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+
+    .no-wrap{ position:relative; display:inline-block; }
+
+    .sparkle{
+      position:absolute;
+      pointer-events:none;
+      width:10px;height:10px;
+      border-radius:50%;
+      background: rgba(255,61,134,.75);
+      transform: translate(-50%,-50%);
+      animation: pop .55s ease-out forwards;
+      filter: blur(.2px);
+    }
+    @keyframes pop{
+      0%{ opacity:0; transform: translate(-50%,-50%) scale(.6); }
+      20%{ opacity:1; }
+      100%{ opacity:0; transform: translate(-50%,-70%) scale(1.6); }
+    }
+
+    audio{
+      width:100%;
+      max-width:360px;
+    }
+
+    .poem{
+      line-height:1.85;
+      font-size:15px;
+    }
+    .poem p{ margin: 12px 0; }
+  </style>
+</head>
+
+<body>
+  <script>
+    // background hearts
+    const heartCount = 22;
+    for(let i=0;i<heartCount;i++){
+      const h=document.createElement('div');
+      h.className='heart';
+      h.style.left = Math.random()*100+'vw';
+      h.style.animationDuration = (7+Math.random()*7)+'s';
+      h.style.animationDelay = (-Math.random()*12)+'s';
+      const s = 10 + Math.random()*18;
+      h.style.width = s+'px';
+      h.style.height = s+'px';
+      h.style.opacity = 0.35 + Math.random()*0.55;
+      document.body.appendChild(h);
+    }
+  </script>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="top">
+        <div class="badge">💌 For <span id="herName"></span></div>
+        <div class="progress" id="progress"></div>
+      </div>
+
+      <div id="scenes"></div>
+
+      <div class="footer">Made by Samarpan with embarrassing levels of love 💗</div>
+    </div>
+  </div>
+
+  <script>
+    // ===== Customize =====
+    const NAME = "Shreya";
+    const YOUR_NAME = "Samarpan";
+
+    // Put these files in the same GitHub repo folder as index.html:
+    const COUPLE_PHOTO = "us.jpg";     // your couple photo (e.g., us.jpg or us.png)
+    const VOICE_NOTE   = "shreya.mp3"; // your voice message (mp3 recommended)
+    // =====================
+
+    document.getElementById("herName").textContent = NAME;
+
+    const scenesEl = document.getElementById("scenes");
+    const progressEl = document.getElementById("progress");
+
+    function sparkle(x,y){
+      const s=document.createElement('div');
+      s.className='sparkle';
+      s.style.left = x+'px';
+      s.style.top = y+'px';
+      document.body.appendChild(s);
+      setTimeout(()=>s.remove(), 600);
+    }
+
+    function stickerSVG(kind){
+      // simple consistent pastel icons (same style for every page)
+      const common = 'fill="none" stroke="rgba(255,61,134,.9)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"';
+      if(kind==="rose") return `
+        <svg viewBox="0 0 48 48" class="wiggle">
+          <path ${common} d="M24 42c-5-8-5-18 0-24"/>
+          <path ${common} d="M24 18c6-8 16-8 16 1 0 10-12 11-16 15"/>
+          <path ${common} d="M24 18c-6-8-16-8-16 1 0 10 12 11 16 15"/>
+          <path ${common} d="M24 18c1-7 6-10 10-10"/>
+          <path ${common} d="M24 18c-1-7-6-10-10-10"/>
+        </svg>`;
+      if(kind==="ring") return `
+        <svg viewBox="0 0 48 48" class="wiggle">
+          <path ${common} d="M16 30c0 6 16 6 16 0v-6c0-6-16-6-16 0v6z"/>
+          <path ${common} d="M20 14l4-5 4 5"/>
+          <circle cx="24" cy="18" r="3.5" ${common}/>
+        </svg>`;
+      if(kind==="choco") return `
+        <svg viewBox="0 0 48 48" class="wiggle">
+          <path ${common} d="M14 16h20v24H14z"/>
+          <path ${common} d="M14 24h20"/>
+          <path ${common} d="M14 32h20"/>
+          <path ${common} d="M24 16v24"/>
+          <path ${common} d="M18 16l6-6 6 6"/>
+        </svg>`;
+      if(kind==="teddy") return `
+        <svg viewBox="0 0 48 48" class="wiggle">
+          <circle cx="16" cy="16" r="5" ${common}/>
+          <circle cx="32" cy="16" r="5" ${common}/>
+          <circle cx="24" cy="26" r="12" ${common}/>
+          <path ${common} d="M20 26h0"/>
+          <path ${common} d="M28 26h0"/>
+          <path ${common} d="M22 30c1 2 3 2 4 0"/>
+          <path ${common} d="M18 38c2-4 10-4 12 0"/>
+        </svg>`;
+      if(kind==="promise") return `
+        <svg viewBox="0 0 48 48" class="wiggle">
+          <path ${common} d="M14 28c2-6 8-10 14-10 7 0 12 5 12 12"/>
+          <path ${common} d="M10 30c0-7 5-12 12-12"/>
+          <path ${common} d="M18 26l6 6 12-14"/>
+        </svg>`;
+      if(kind==="hug") return `
+        <svg viewBox="0 0 48 48" class="wiggle">
+          <path ${common} d="M16 20c-3 1-6 4-6 8v8"/>
+          <path ${common} d="M32 20c3 1 6 4 6 8v8"/>
+          <path ${common} d="M18 18c0-4 3-7 6-7s6 3 6 7"/>
+          <path ${common} d="M18 26c3 3 9 3 12 0"/>
+          <path ${common} d="M16 36c4-6 12-6 16 0"/>
+        </svg>`;
+      if(kind==="kiss") return `
+        <svg viewBox="0 0 48 48" class="wiggle">
+          <path ${common} d="M18 28c-4-4-6-9-4-14 2-5 8-6 12-2 4-4 10-3 12 2 2 5 0 10-4 14-3 3-6 6-8 8-2-2-5-5-8-8z"/>
+          <path ${common} d="M34 30c3 0 6 2 6 5"/>
+        </svg>`;
+      // valentine
+      return `
+        <svg viewBox="0 0 48 48" class="wiggle">
+          <path ${common} d="M24 40s-14-8-14-18c0-6 7-10 14-4 7-6 14-2 14 4 0 10-14 18-14 18z"/>
+          <path ${common} d="M16 22h16"/>
+        </svg>`;
+    }
+
+    function tplScene({title, dayLabel, stickerKind, pills=[], bodyHTML="", showPhoto=false, showVoice=false, final=false}) {
+      const wrap = document.createElement("div");
+      wrap.className = "scene";
+
+      const pillsHTML = pills.length
+        ? `<div class="pillrow">${pills.map(t=>`<div class="pill">${t}</div>`).join("")}</div>`
+        : "";
+
+      const stickerHTML = `
+        <div class="stickerRow">
+          <div class="sticker">
+            ${stickerSVG(stickerKind)}
+            <div>
+              <div class="t">${dayLabel}</div>
+              <div style="font-size:12.5px;opacity:.75;">Long-distance edition</div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const photoHTML = (showPhoto && COUPLE_PHOTO)
+        ? `
+          <div class="media">
+            <img src="${COUPLE_PHOTO}" alt="us" loading="lazy">
+          </div>
+          <div class="caption">Us. My favorite plot twist.</div>
+        ` : "";
+
+      const voiceHTML = (showVoice && VOICE_NOTE)
+        ? `
+          <div class="bubble" style="margin-top:14px; text-align:center;">
+            <p style="margin:0; font-weight:900;">Listen to this when you’re alone.</p>
+            <p style="margin:6px 0 12px; opacity:.75;">(It’s my voice. No dramatic music. Just me.)</p>
+            <audio controls preload="none">
+              <source src="${VOICE_NOTE}" type="audio/mpeg">
+              Your browser does not support audio playback.
+            </audio>
+          </div>
+        ` : "";
+
+      wrap.innerHTML = `
+        <h1>${title}</h1>
+        ${pillsHTML}
+        ${stickerHTML}
+        <div class="bubble">${bodyHTML}</div>
+        ${voiceHTML}
+        ${photoHTML}
+        ${final ? `
+          <div class="yesArea">
+            <button class="btn" id="yesBtn">Yes 💞</button>
+            <span class="no-wrap">
+              <button class="btn2" id="noBtn">No 😶</button>
+            </span>
+          </div>
+          <div class="caption" id="noHint">You can answer honestly… but the “No” button is shy.</div>
+        ` : `
+          <div class="nav">
+            <button class="btn2" id="prevBtn">← Back</button>
+            <button class="btn" id="nextBtn">Next →</button>
+          </div>
+        `}
+      `;
+
+      return wrap;
+    }
+
+    const VAL_WEEK = [
+      {
+        day: "Intro",
+        dayLabel: "Welcome",
+        sticker: "val",
+        title: `Hey ${NAME} 💖`,
+        pills: ["Romantic + annoying 😌", "Long-distance couple things 📱", "Made by Samarpan"],
+        bodyHTML: `
+          <p>This isn’t a trend page. This is a <b>Samarpan production</b> made to make you feel special.</p>
+          <p>We haven’t even gone through the full Valentine Week yet…</p>
+          <div class="note">
+            <p style="margin:0;">
+              I know we haven’t been through the full Valentine Week… but I can’t wait.
+              I just wanted to tell you how much you mean to me <b>today</b>.
+            </p>
+            <p style="margin:10px 0 0; font-weight:900;">
+              Your impatient, <span style="color:var(--pink);">${YOUR_NAME}</span> 💗
+            </p>
+          </div>
+          <p style="opacity:.8;margin-top:10px;">(Warning: may cause blushing in public.)</p>
+        `
+      },
+
+      {
+        day: "Rose Day",
+        dayLabel: "Rose Day 🌹",
+        sticker: "rose",
+        title: "Rose Day (long-distance edition)",
+        pills: ["Digital rose", "No thorns", "All feelings"],
+        bodyHTML: `
+          <p>If I could, I’d hand you a rose in real life.</p>
+          <p>Since physics is being difficult, please accept this:</p>
+          <p><b>🌹 One rose for your smile.</b><br>
+             <b>🌹 One rose for your patience.</b><br>
+             <b>🌹 One rose because I miss you so much it’s embarrassing.</b>
+          </p>
+          <p>Also this rose doesn’t die. Basically… immortal romance.</p>
+        `
+      },
+
+      {
+        day: "Propose Day",
+        dayLabel: "Propose Day 💍",
+        sticker: "ring",
+        title: "Propose Day",
+        pills: ["No big speech", "Just truth", "I choose you"],
+        bodyHTML: `
+          <p>I’m not doing dramatic lines. You already know me.</p>
+          <p>My proposal today is simple:</p>
+          <p><b>I choose you.</b> On calm days. On messy days. On network-fail video calls.
+          On “I miss you” days (which is… most days).</p>
+          <p>And yes, I propose we keep being each other’s person—forever-ish. 😌</p>
+        `
+      },
+
+      {
+        day: "Chocolate Day",
+        dayLabel: "Chocolate Day 🍫",
+        sticker: "choco",
+        title: "Chocolate Day",
+        pills: ["Sweet like you", "No calories in feelings", "Delivered via thoughts"],
+        bodyHTML: `
+          <p>I would absolutely bribe you with chocolate right now.</p>
+          <p>Long-distance version: I’m sending you <b>chocolate energy</b> through the air like a Wi-Fi signal.</p>
+          <p>If you eat chocolate today, consider it <b>my treat spiritually</b>.</p>
+          <p>And if you don’t… I’ll still love you. But I’ll judge a little. (Softly.)</p>
+        `
+      },
+
+      {
+        day: "Teddy Day",
+        dayLabel: "Teddy Day 🧸",
+        sticker: "teddy",
+        title: "Teddy Day",
+        pills: ["Warm", "Soft", "Almost me"],
+        bodyHTML: `
+          <p>If I could teleport, I’d be your teddy today.</p>
+          <p>Since teleportation is not cooperating, imagine this:</p>
+          <p><b>One tight hug, upgraded to 4K.</b><br>
+             <b>One forehead kiss.</b><br>
+             <b>One “you’re safe with me” feeling.</b>
+          </p>
+          <p>Also yes, I’m jealous of your pillow.</p>
+        `
+      },
+
+      {
+        day: "Promise Day",
+        dayLabel: "Promise Day 🤝",
+        sticker: "promise",
+        title: "Promise Day",
+        pills: ["Consistency > speeches", "Effort", "Soft loyalty"],
+        bodyHTML: `
+          <p>I promise to keep choosing you in small ways:</p>
+          <p>
+            • Showing up—even from far away.<br>
+            • Listening like your feelings are the main story (because they are).<br>
+            • Making you laugh when life is heavy.<br>
+            • Being patient when the distance gets loud.<br>
+          </p>
+          <p>And I promise to keep our memories safe: <b>our first date</b>, <b>the full moon at Patan Mandir</b>, <b>momo in Patan ko Galli</b> — all of it.</p>
+        `
+      },
+
+      // Quiet poem interlude (so she recognizes it herself)
+      {
+        day: "Moon Page",
+        dayLabel: "A quiet page 🌙",
+        sticker: "val",
+        title: "🌙",
+        pills: ["From then", "Still true"],
+        bodyHTML: `
+          <p style="opacity:.85; font-style:italic; margin-top:0;">
+            I found something I wrote years ago.<br>
+            I won’t explain it.<br>
+            I’ll just leave it here.
+          </p>
+
+          <div class="poem">
+            <p>
+              If only I could own my dreams,<br>
+              With sleepless night, I would trade all of it.<br>
+              Telling the birds to sleep early and quiet,<br>
+              Even the leaves wouldn’t make any noise.
+            </p>
+
+            <p>
+              And here I hold my breath all so tight<br>
+              For listening you breathe all whole night
+            </p>
+
+            <p>
+              If morning were endless<br>
+              And you drizzle like rain
+            </p>
+
+            <p>
+              I could be an ocean receiving all your pain.
+            </p>
+
+            <p>
+              Let the pain move like waves between shores of our souls<br>
+              And embrace each other until it utterly goes
+            </p>
+
+            <p>
+              Unite our soul, make it whole and make those pain never shows again<br>
+              And tell our tale to the clouds as they listen cravingly, the pelting rain
+            </p>
+
+            <p>
+              The worst things about mornings and nights,<br>
+              They always end
+            </p>
+
+            <p>
+              I pass the time in between, counting hours, till comes the another night<br>
+              My heart, I love you with all my soul and with all my might
+            </p>
+
+            <p>
+              Among all the loveliest things, you are the only one precious, I have.<br>
+              For length of my love is far greater than length of my life
+            </p>
+
+            <p>
+              Give me a little of you dear, and I will give you all of mine
+            </p>
+
+            <p>
+              If I could stop my heart from loving you<br>
+              Then I shall remain heartless<br>
+              For there’s nothing I would rather do<br>
+              Than spending my whole life loving only you.
+            </p>
+
+            <p style="margin-top:18px; font-weight:900;">
+              — ${YOUR_NAME}
+            </p>
+          </div>
+        `
+      },
+
+      {
+        day: "Hug Day",
+        dayLabel: "Hug Day 🫂",
+        sticker: "hug",
+        title: "Hug Day",
+        pills: ["Compression: MAX", "No escape", "Long-distance hug"],
+        bodyHTML: `
+          <p>Today’s hug is a <b>multi-step plan</b>:</p>
+          <p><b>Step 1:</b> Close your eyes for 2 seconds.<br>
+             <b>Step 2:</b> Imagine me hugging you tight.<br>
+             <b>Step 3:</b> Now pretend I refuse to let go because I’m stubborn. 😌
+          </p>
+          <p>Long distance is annoying, but it can’t stop this: <b>I’m with you.</b></p>
+
+          <div class="bubble" style="margin-top:14px;">
+            <p style="margin:0; font-weight:900;">Some favorite us-moments</p>
+            <p style="margin:10px 0 0;">
+              • Our <b>first date</b> (not perfect—just real).<br>
+              • The <b>full moon at Patan Mandir</b> (quiet, still, unforgettable).<br>
+              • <b>Momo in Patan ko Galli</b> (laughing + eating = peace).
+            </p>
+          </div>
+        `
+      },
+
+      {
+        day: "Kiss Day",
+        dayLabel: "Kiss Day 💋",
+        sticker: "kiss",
+        title: "Kiss Day",
+        pills: ["Respectfully romantic", "Unreasonably obsessed", "Yes I miss you"],
+        bodyHTML: `
+          <p>I owe you approximately <b>infinite kisses</b>.</p>
+          <p>But we have to acknowledge an important historical event:</p>
+          <p><b>The day I didn’t eat ice-cream through your mouth.</b></p>
+          <p>I still don’t know if it was fear, respect, or survival instinct.</p>
+          <p>You were mad. I was confused. We were iconic. 😭</p>
+          <p>So today I’m sending you a kiss that says: <b>I love you… and I’m still scared of that ice-cream moment.</b></p>
+        `
+      },
+
+      {
+        day: "Valentine’s Day",
+        dayLabel: "Valentine 💘",
+        sticker: "val",
+        title: `${NAME}… the big question 💘`,
+        pills: ["No schedule", "Just truth", "Just you"],
+        bodyHTML: `
+          <p>I don’t love you because of a list.</p>
+          <p>I love you because life feels more like itself when you’re in it.</p>
+          <p>Because even silence with you isn’t empty.</p>
+          <p>Because you’re you. And somehow, that’s everything.</p>
+          <p style="margin-top:12px; font-weight:900;">So… will you be my Valentine? 🌹</p>
+
+          <div class="note">
+            <p style="margin:0;">
+              I know we haven’t even gone through the “proper” Valentine Week timeline…
+              but I couldn’t wait. I wanted you to feel this <b>today</b>.
+            </p>
+            <p style="margin:10px 0 0; font-weight:900;">
+              Your impatient, <span style="color:var(--pink);">${YOUR_NAME}</span> 💗
+            </p>
+          </div>
+        `,
+        showVoice: true,
+        showPhoto: true,
+        final: true
+      }
+    ];
+
+    // build scenes
+    const sceneNodes = VAL_WEEK.map((d) => tplScene({
+      title: d.title,
+      dayLabel: d.dayLabel,
+      stickerKind: d.sticker,
+      pills: d.pills || [],
+      bodyHTML: d.bodyHTML || "",
+      showPhoto: !!d.showPhoto,
+      showVoice: !!d.showVoice,
+      final: !!d.final
+    }));
+
+    sceneNodes.forEach(n => scenesEl.appendChild(n));
+
+    let idx = 0;
+
+    function updateProgress(){
+      progressEl.textContent = `${idx+1} / ${VAL_WEEK.length} • ${VAL_WEEK[idx].day}`;
+    }
+
+    function show(i){
+      idx = Math.max(0, Math.min(i, sceneNodes.length-1));
+      document.querySelectorAll(".scene").forEach(s => s.classList.remove("active"));
+      sceneNodes[idx].classList.add("active");
+      updateProgress();
+
+      const active = sceneNodes[idx];
+      const prev = active.querySelector("#prevBtn");
+      const next = active.querySelector("#nextBtn");
+
+      if(prev) prev.onclick = (e)=>{ sparkle(e.clientX, e.clientY); show(idx-1); };
+      if(next) next.onclick = (e)=>{ sparkle(e.clientX, e.clientY); show(idx+1); };
+
+      // Final scene: Yes/No behavior (trend-ish but classy)
+      const yes = active.querySelector("#yesBtn");
+      const no  = active.querySelector("#noBtn");
+      const hint = active.querySelector("#noHint");
+      const wrap = active.querySelector(".no-wrap");
+
+      let noDodges = 0;
+      const noPhrases = [
+        "Are you sure? 🥺",
+        "Wait wait wait 😭",
+        "That button is… suspicious.",
+        "Your finger slipped, try again 😌",
+        "Okay but what if… yes? 😳",
+        "I’m gonna cry (tiny) 😔",
+        "That’s illegal actually 🚔💘",
+        "The universe says no to ‘no’ 🌌",
+        "I asked nicely though 🥹",
+        "Last chance… pretty please? 🍓"
+      ];
+
+      function dodge(){
+        noDodges++;
+        if(hint) hint.textContent = noPhrases[Math.min(noDodges-1, noPhrases.length-1)];
+
+        const area = active.getBoundingClientRect();
+        const maxX = Math.max(0, Math.min(220, area.width - 160));
+        const maxY = 50;
+
+        const x = (Math.random()*maxX) - (maxX/2);
+        const y = (Math.random()*maxY) - (maxY/2);
+
+        if(wrap){
+          wrap.style.transform = `translate(${x}px, ${y}px)`;
+          wrap.style.transition = "transform .12s ease";
+        }
+
+        if(noDodges >= 10 && no) no.textContent = "I’m shy 🙈";
+        if(noDodges >= 14 && no){
+          no.textContent = "Okay fine… click me";
+          no.removeEventListener("mouseenter", dodge);
+          no.removeEventListener("touchstart", dodge);
+        }
+      }
+
+      if(yes){
+        yes.onclick = (e)=>{
+          sparkle(e.clientX, e.clientY);
+          alert(`YAY 💖\n\nOfficially confirmed:\n${NAME} is my Valentine.\n\n— ${YOUR_NAME}`);
+        };
+      }
+      if(no){
+        // desktop + mobile
+        no.addEventListener("mouseenter", dodge);
+        no.addEventListener("touchstart", (e)=>{ e.preventDefault(); dodge(); }, {passive:false});
+        no.onclick = (e)=>{
+          sparkle(e.clientX, e.clientY);
+          alert("Nice try 😌\nThis option has been politely rejected by the Romance Department™.");
+        };
+      }
+
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+
+    show(0);
+  </script>
+</body>
+</html>
